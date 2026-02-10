@@ -23,7 +23,7 @@ async function load() {
   }
 }
 
-async function add() {
+/*async function add() {
   const date = dateEl.value;
   const amount = amountEl.value;
   const type = typeEl.value;
@@ -36,7 +36,25 @@ async function add() {
   ]);
 
   load();
+}*/
+
+async function add() {
+  if (!selectedDate) return alert("날짜를 선택하세요");
+
+  const amount = document.getElementById("amount").value;
+  const type = document.getElementById("type").value;
+  const memo = document.getElementById("memo").value;
+
+  await supabaseClient.from("expenses").insert({
+    date: selectedDate,
+    amount,
+    type,
+    memo
+  });
+
+  loadExpenses(selectedDate);
 }
+
 
 async function remove(id) {
   if (!confirm("삭제할까요?")) return;
@@ -122,4 +140,15 @@ function selectDate(dateStr, element) {
   loadExpenses(dateStr);
 }
 
+async function loadExpenses(date) {
+  const { data, error } = await supabaseClient
+    .from("expenses")
+    .select("*")
+    .eq("date", date)
+    .order("created_at", { ascending: false });
+
+  if (error) return console.error(error);
+
+  renderList(data);
+}
 
