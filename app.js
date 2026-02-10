@@ -68,8 +68,8 @@ function changeMonth(diff) {
 
   const today = new Date();
   if (
-    today.getFullYear() === currentYear &&
-    today.getMonth() === currentMonth
+    today.getFullYear() === currentDate.getFullYear() &&
+    today.getMonth() === currentDate.getMonth()
   ) {
     selectDate(today.toISOString().slice(0, 10));
   }
