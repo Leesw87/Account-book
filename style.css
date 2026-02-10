@@ -95,6 +95,13 @@ button {
   border-radius: 8px;
 }
 
+button.delete {
+  background: none;
+  border: none;
+  color: #fa5252;
+  cursor: pointer;
+}
+
 ul {
   padding: 0;
   margin-top: 10px;
