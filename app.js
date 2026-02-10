@@ -59,6 +59,7 @@ function resetSelection() {
   document.getElementById("expenseSection").style.display = "none";
   document.getElementById("selectedDate").textContent = "";
   document.getElementById("expenseList").innerHTML = "";
+  document.getElementById("memo").textContent = "";
 }
 
 function changeMonth(diff) {  
