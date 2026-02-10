@@ -89,7 +89,12 @@ async function add() {
   const amountInput = document.getElementById("amount");
   const amount = amountInput.value;
 
-  if (!amount) return;
+  if (!amount || amount <= 0)
+  {
+    alert("금액을 입력하세요.");
+    amountInput.focus();
+    return;
+  }
   
   const type = document.getElementById("type").value;
   const memo = document.getElementById("memo").value;
