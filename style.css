@@ -117,7 +117,7 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 4px;
+  padding: 12px 6px;
   border-bottom: 1px solid #eee;
 }
 
@@ -133,7 +133,7 @@ li {
   gap: 6px;
   font-size: 14px;
   font-weight: 500;
-  white-space: nowrap; /* 🔥 줄바꿈 방지 */
+  white-space: nowrap;
 }
 
 .expense-memo {
@@ -141,11 +141,18 @@ li {
   color: #888;
 }
 
-button.delete {
-  background: none;
-  border: none;
-  color: #ff6b6b;
+button.delete-btn {
+  padding: 4px 10px;
   font-size: 12px;
+  border-radius: 12px;
+  border: 1px solid #ff6b6b;
+  background-color: #fff;
+  color: #ff6b6b;
   cursor: pointer;
   white-space: nowrap;
+}
+
+button.delete-btn:hover {
+  background-color: #ff6b6b;
+  color: #fff;
 }
