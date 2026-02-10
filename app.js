@@ -60,6 +60,10 @@ function resetSelection() {
   document.getElementById("selectedDate").textContent = "";
   document.getElementById("expenseList").innerHTML = "";
   document.getElementById("memo").textContent = "";
+
+  document.getElementById("type").selectedIndex = 0;
+  document.getElementById("amount").value = "";
+  document.getElementById("memo").value = "";
 }
 
 function changeMonth(diff) {  
