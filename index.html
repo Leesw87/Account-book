@@ -30,14 +30,17 @@
 <div id="expenseSection" style="display:none;">
   <h3 id="selectedDate"></h3>
   <ul id="expenseList"></ul>
-  <input type="number" id="amount" placeholder="금액" />
-
-  <select id="type">
+  
+  <div class="row">
+    <select id="type">
     <option value="">== 지출종류 ==</option>
     <option value="고정지출">고정지출</option>
     <option value="카드지출">카드지출</option>
     <option value="현금지출">현금지출</option>
   </select>
+    
+  <input type="number" id="amount" placeholder="금액" />
+  </div>  
 
   <input type="text" id="memo" placeholder="메모" />
   <button id="addBtn">추가</button>
