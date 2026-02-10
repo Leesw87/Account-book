@@ -1,26 +1,22 @@
+let currentDate = new Date();
 let selectedDate = null;
 
-/* ===== 초기 로드 ===== */
 document.addEventListener("DOMContentLoaded", () => {
-  const addBtn = document.getElementById("addBtn");
-  addBtn.addEventListener("click", add);
+  document.getElementById("addBtn").addEventListener("click", add);
+  document.getElementById("prevMonth").addEventListener("click", () => changeMonth(-1));
+  document.getElementById("nextMonth").addEventListener("click", () => changeMonth(1));
 
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
-  const todayStr = today.toISOString().slice(0, 10);
-
-  renderCalendar(year, month);
-
-  // 오늘 날짜 자동 선택
-  setTimeout(() => {
-    const todayEl = document.querySelector(`[data-date="${todayStr}"]`);
-    if (todayEl) todayEl.click();
-  }, 0);
+  renderCalendar();
 });
 
-/* ===== 달력 ===== */
-function renderCalendar(year, month) {
+/* ===== Calendar ===== */
+function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  document.getElementById("monthTitle").innerText =
+    `${year}년 ${month + 1}월`;
+
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
 
@@ -37,21 +33,23 @@ function renderCalendar(year, month) {
 
     div.className = "day";
     div.innerText = d;
-    div.dataset.date = dateStr;
     div.onclick = () => selectDate(dateStr, div);
 
     calendar.appendChild(div);
   }
 }
 
-/* ===== 날짜 선택 ===== */
-function selectDate(dateStr, element) {
+function changeMonth(diff) {
+  currentDate.setMonth(currentDate.getMonth() + diff);
+  renderCalendar();
+}
+
+/* ===== Select Date ===== */
+function selectDate(dateStr, el) {
   selectedDate = dateStr;
 
-  document.querySelectorAll(".day").forEach(d =>
-    d.classList.remove("selected")
-  );
-  element.classList.add("selected");
+  document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
+  el.classList.add("selected");
 
   document.getElementById("selectedDate").innerText = `📅 ${dateStr}`;
   document.getElementById("expenseSection").style.display = "block";
@@ -61,20 +59,25 @@ function selectDate(dateStr, element) {
 
 /* ===== Supabase ===== */
 async function loadExpenses(date) {
-  const { data, error } = await supabaseClient
+  const { data } = await supabaseClient
     .from("expenses")
     .select("*")
-    .eq("date", date)
-    .order("created_at", { ascending: false });
+    .eq("date", date);
 
-  if (error) return console.error(error);
-  renderList(data);
+  const list = document.getElementById("list");
+  list.innerHTML = "";
+
+  data.forEach(e => {
+    const li = document.createElement("li");
+    li.innerText = `${e.type} · ${e.amount.toLocaleString()}원`;
+    list.appendChild(li);
+  });
 }
 
 async function add() {
-  if (!selectedDate) return alert("날짜를 선택하세요");
+  if (!selectedDate) return alert("날짜 선택");
 
-  const amount = document.getElementById("amount").value;
+  const amount = amount.value;
   const type = document.getElementById("type").value;
   const memo = document.getElementById("memo").value;
 
@@ -86,28 +89,4 @@ async function add() {
   });
 
   loadExpenses(selectedDate);
-}
-
-async function remove(id) {
-  if (!confirm("삭제할까요?")) return;
-  await supabaseClient.from("expenses").delete().eq("id", id);
-  loadExpenses(selectedDate);
-}
-
-/* ===== 리스트 렌더 ===== */
-function renderList(rows) {
-  const list = document.getElementById("list");
-  list.innerHTML = "";
-
-  rows.forEach(e => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      <div>
-        ${e.type} · ${e.amount.toLocaleString()}원<br>
-        ${e.memo || ""}
-      </div>
-      <button class="delete" onclick="remove('${e.id}')">삭제</button>
-    `;
-    list.appendChild(li);
-  });
 }
