@@ -1,7 +1,7 @@
 let expenses = [];
 
 async function load() {
-  const { data } = await supabase
+  const { data } = await supabaseClient
     .from("expenses")
     .select("*")
     .order("date", { ascending: false });
@@ -18,7 +18,7 @@ async function add() {
 
   if (!date || !amount) return alert("날짜와 금액 필수");
 
-  await supabase.from("expenses").insert([
+  await supabaseClient.from("expenses").insert([
     { date, amount, type, memo }
   ]);
 
@@ -28,6 +28,6 @@ async function add() {
 async function remove(id) {
   if (!confirm("삭제할까요?")) return;
 
-  await supabase.from("expenses").delete().eq("id", id);
+  await supabaseClient.from("expenses").delete().eq("id", id);
   load();
 }
