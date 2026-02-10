@@ -68,20 +68,48 @@ function selectDate(dateStr, el) {
 
 /* ===== Supabase ===== */
 async function loadExpenses(date) {
-  const { data } = await supabaseClient
-    .from("expenses")
-    .select("*")
-    .eq("date", date);
-
-  const list = document.getElementById("list");
+  const list = document.getElementById("expenseList");
   list.innerHTML = "";
 
-  data.forEach(e => {
+  const { data, error } = await supabaseClient
+    .from("expenses")
+    .select("id, amount, type, memo")
+    .eq("date", date)
+    .order("id", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  data.forEach(item => {
     const li = document.createElement("li");
-    li.innerText = `${e.type} · ${e.amount.toLocaleString()}원`;
+
+    li.innerHTML = `
+      <span>${item.type} - ${item.amount.toLocaleString()}원</span>
+      <span>${item.memo || ""}</span>
+      <button class="delete" data-id="${item.id}">삭제</button>
+    `;
+
+    li.querySelector(".delete").onclick = () =>
+      deleteExpense(item.id, date);
+
     list.appendChild(li);
   });
 }
+
+async function deleteExpense(id, date) {
+  if (!confirm("삭제할까요?")) return;
+
+  await supabaseClient
+    .from("expenses")
+    .delete()
+    .eq("id", id);
+
+  await renderCalendar();
+  loadExpenses(date);
+}
+
 
 async function add() {
   if (!selectedDate) return alert("날짜 선택");
