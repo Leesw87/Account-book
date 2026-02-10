@@ -12,10 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ===== Calendar ===== */
-window.onload = () => {
-  const today = new Date().toISOString().slice(0, 10);
-  selectDate(today);
-};
 
 async function renderCalendar() {
   const year = currentDate.getFullYear();
