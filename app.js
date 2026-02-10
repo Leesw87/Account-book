@@ -72,7 +72,16 @@ function selectDate(dateStr, el) {
   selectedDate = dateStr;
 
   document.querySelectorAll(".day").forEach(d => d.classList.remove("selected"));
-  el.classList.add("selected");
+
+  if (!el)
+  {
+    el = document.querySelector(`.day[data-date="${dateStr}"]`);
+  }
+
+  if (el)
+  {
+    el.classList.add("selected");
+  }
 
   document.getElementById("selectedDate").innerText = `📅 ${dateStr}`;
   document.getElementById("expenseSection").style.display = "block";
