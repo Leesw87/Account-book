@@ -61,10 +61,18 @@ function resetSelection() {
   document.getElementById("expenseList").innerHTML = "";
 }
 
-function changeMonth(diff) {
-  resetSelection();
+function changeMonth(diff) {  
   currentDate.setMonth(currentDate.getMonth() + diff);
   renderCalendar();
+  resetSelection();
+
+  const today = new Date();
+  if (
+    today.getFullYear() === currentYear &&
+    today.getMonth() === currentMonth
+  ) {
+    selectDate(today.toISOString().slice(0, 10));
+  }
 }
 
 /* ===== Select Date ===== */
