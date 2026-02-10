@@ -1,5 +1,6 @@
 let currentDate = new Date();
 let selectedDate = null;
+let expenseDates = new Set();
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("addBtn").addEventListener("click", add);
@@ -10,12 +11,14 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ===== Calendar ===== */
-function renderCalendar() {
+async function renderCalendar() {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
   document.getElementById("monthTitle").innerText =
     `${year}년 ${month + 1}월`;
+
+  await loadExpenseDatesForMonth(year, month);
 
   const calendar = document.getElementById("calendar");
   calendar.innerHTML = "";
@@ -33,11 +36,17 @@ function renderCalendar() {
 
     div.className = "day";
     div.innerText = d;
+
+    if (expenseDates.has(dateStr)) {
+      div.classList.add("has-expense");
+    }
+
     div.onclick = () => selectDate(dateStr, div);
 
     calendar.appendChild(div);
   }
 }
+
 
 function changeMonth(diff) {
   currentDate.setMonth(currentDate.getMonth() + diff);
@@ -82,11 +91,32 @@ async function add() {
   const memo = document.getElementById("memo").value;
 
   await supabaseClient.from("expenses").insert({
-    date: selectedDate,
-    amount,
-    type,
-    memo
-  });
+  date: selectedDate,
+  amount,
+  type,
+  memo
+});
 
-  loadExpenses(selectedDate);
+await renderCalendar();
+loadExpenses(selectedDate);
+
 }
+
+async function loadExpenseDatesForMonth(year, month) {
+  const start = `${year}-${String(month + 1).padStart(2, "0")}-01`;
+  const end = `${year}-${String(month + 1).padStart(2, "0")}-31`;
+
+  const { data, error } = await supabaseClient
+    .from("expenses")
+    .select("date")
+    .gte("date", start)
+    .lte("date", end);
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  expenseDates = new Set(data.map(d => d.date));
+}
+
