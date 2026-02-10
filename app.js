@@ -11,6 +11,10 @@ const memoEl = document.getElementById("memo");
 
 let data = [];
 
+const today = new Date();
+renderCalendar(today.getFullYear(), today.getMonth());
+selectDate(today.toISOString().slice(0,10));
+
 async function load() {
   const { data: rows, error } = await supabaseClient
     .from("expenses")
