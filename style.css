@@ -159,3 +159,18 @@ button.delete-btn:hover {
   background-color: #ff6b6b;
   color: #fff;
 }
+
+.row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+#type {
+  width: 120px;     /* 👈 작게 */
+  flex-shrink: 0;
+}
+
+#amount {
+  flex: 1;          /* 👈 남은 공간 전부 */
+}
