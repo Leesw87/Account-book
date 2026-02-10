@@ -112,3 +112,35 @@ li {
   padding: 8px 0;
   border-bottom: 1px solid #eee;
 }
+
+#expenseList li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 6px;
+  border-bottom: 1px solid #eee;
+}
+
+.expense-info {
+  flex: 1;
+}
+
+.expense-info .main {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.expense-info .memo {
+  font-size: 12px;
+  color: #888;
+}
+
+button.delete {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
