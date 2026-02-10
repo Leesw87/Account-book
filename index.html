@@ -2,13 +2,22 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>미니 가계부</title>
+  <title>가계부</title>
   <style>
-    body { font-family: Arial; max-width: 500px; margin: 40px auto; }
-    input, button { padding: 8px; margin: 4px 0; width: 100%; }
+    body { font-family: Arial; max-width: 600px; margin: 30px auto; }
+    input, select, button { padding: 8px; margin: 4px 0; width: 100%; }
     ul { padding: 0; }
-    li { list-style: none; padding: 6px 0; border-bottom: 1px solid #ddd; }
-    .sum { font-weight: bold; margin-top: 16px; }
+    li {
+      list-style: none;
+      padding: 6px 0;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .info { font-size: 14px; }
+    .stats { margin-top: 20px; font-weight: bold; }
+    button.delete { width: auto; background: #ff6b6b; color: white; border: none; }
   </style>
 </head>
 <body>
@@ -17,41 +26,82 @@
 
 <input type="date" id="date">
 <input type="number" id="amount" placeholder="금액">
+
+<select id="type">
+  <option value="고정지출">고정지출</option>
+  <option value="카드지출">카드지출</option>
+  <option value="현금지출">현금지출</option>
+</select>
+
 <input type="text" id="memo" placeholder="메모">
 <button onclick="add()">추가</button>
 
 <ul id="list"></ul>
-<div class="sum" id="sum"></div>
+
+<div class="stats" id="stats"></div>
 
 <script>
-  const data = JSON.parse(localStorage.getItem("expenses") || "[]");
+  let data = JSON.parse(localStorage.getItem("expenses") || "[]");
 
   function render() {
     const list = document.getElementById("list");
-    const sumEl = document.getElementById("sum");
+    const stats = document.getElementById("stats");
     list.innerHTML = "";
-    let total = 0;
 
-    data.forEach(e => {
+    let total = 0;
+    let monthly = {};
+
+    data.forEach((e, i) => {
       total += Number(e.amount);
+
+      const month = e.date.slice(0, 7);
+      monthly[month] = (monthly[month] || 0) + Number(e.amount);
+
       const li = document.createElement("li");
-      li.textContent = `${e.date} | ${e.amount}원 | ${e.memo}`;
+
+      li.innerHTML = `
+        <div class="info">
+          ${e.date} | ${e.type} | ${e.amount.toLocaleString()}원<br>
+          ${e.memo || ""}
+        </div>
+        <button class="delete" onclick="remove(${i})">삭제</button>
+      `;
       list.appendChild(li);
     });
 
-    sumEl.textContent = `총 지출: ${total.toLocaleString()}원`;
+    const months = Object.keys(monthly);
+    const avg = months.length
+      ? Math.round(total / months.length)
+      : 0;
+
+    stats.innerHTML = `
+      총 지출: ${total.toLocaleString()}원<br>
+      월 평균 지출: ${avg.toLocaleString()}원
+    `;
+
     localStorage.setItem("expenses", JSON.stringify(data));
   }
 
   function add() {
     const date = document.getElementById("date").value;
     const amount = document.getElementById("amount").value;
+    const type = document.getElementById("type").value;
     const memo = document.getElementById("memo").value;
 
-    if (!date || !amount) return alert("날짜와 금액은 필수!");
+    if (!date || !amount) {
+      alert("날짜와 금액은 필수입니다");
+      return;
+    }
 
-    data.push({ date, amount, memo });
+    data.push({ date, amount: Number(amount), type, memo });
     render();
+  }
+
+  function remove(index) {
+    if (confirm("삭제할까요?")) {
+      data.splice(index, 1);
+      render();
+    }
   }
 
   render();
