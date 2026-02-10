@@ -103,8 +103,11 @@ loadExpenses(selectedDate);
 }
 
 async function loadExpenseDatesForMonth(year, month) {
-  const start = `${year}-${String(month + 1).padStart(2, "0")}-01`;
-  const end = `${year}-${String(month + 1).padStart(2, "0")}-31`;
+  const startDate = new Date(year, month, 1);
+  const endDate = new Date(year, month + 1, 0); // ✅ 해당 월 마지막 날
+
+  const start = startDate.toISOString().slice(0, 10);
+  const end = endDate.toISOString().slice(0, 10);
 
   const { data, error } = await supabaseClient
     .from("expenses")
@@ -117,7 +120,10 @@ async function loadExpenseDatesForMonth(year, month) {
     return;
   }
 
-  expenseDates = new Set(data.map(d => d.date));
+  expenseDates = new Set(
+    data.map(d => d.date.slice(0, 10)) // timestamp 대응
+  );
 }
+
 
 window.add = add;
