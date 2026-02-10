@@ -144,6 +144,8 @@ li {
 
 button.delete-btn {
   flex-shrink: 0;
+  width: 56px;
+  text-align: center;
   padding: 4px 12px;
   font-size: 12px;
   border-radius: 12px;
@@ -151,7 +153,6 @@ button.delete-btn {
   background-color: #fff;
   color: #ff6b6b;
   cursor: pointer;
-  white-space: nowrap;
 }
 
 button.delete-btn:hover {
