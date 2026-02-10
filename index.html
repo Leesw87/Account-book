@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <meta charset="UTF-8" />
+  <title>가계부</title>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase.js" defer></script>
   <script src="app.js" defer></script>
 
-  <link rel="stylesheet" href="style.css">
-  
-  <meta charset="UTF-8">
-  <title>가계부</title>
-  <style>
-    body { font-family: Arial; max-width: 600px; margin: 30px auto; }
-    input, select, button { padding: 8px; margin: 4px 0; width: 100%; }
-    ul { padding: 0; }
-    li {
-      list-style: none;
-      padding: 6px 0;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .info { font-size: 14px; }
-    .stats { margin-top: 20px; font-weight: bold; }
-    button.delete { width: auto; background: #ff6b6b; color: white; border: none; }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <h2>📒 가계부</h2>
 
-<div id="calendar"></div>
-
-<h3 id="selectedDate"></h3>
-
-  <div class="month-nav">
+<div class="month-nav">
   <button id="prevMonth">◀</button>
   <span id="monthTitle"></span>
   <button id="nextMonth">▶</button>
 </div>
 
+<div class="weekdays">
+  <div>일</div><div>월</div><div>화</div><div>수</div>
+  <div>목</div><div>금</div><div>토</div>
+</div>
+
+<div id="calendar"></div>
+
+<h3 id="selectedDate"></h3>
+
 <div id="expenseSection" style="display:none;">
-  <input type="number" id="amount" placeholder="금액">
+  <input type="number" id="amount" placeholder="금액" />
 
   <select id="type">
     <option value="고정지출">고정지출</option>
@@ -49,12 +38,11 @@
     <option value="현금지출">현금지출</option>
   </select>
 
-  <input type="text" id="memo" placeholder="메모">
+  <input type="text" id="memo" placeholder="메모" />
   <button id="addBtn">추가</button>
 
   <ul id="list"></ul>
 </div>
-
 
 </body>
 </html>
