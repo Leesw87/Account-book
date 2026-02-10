@@ -86,20 +86,25 @@ async function loadExpenses(date) {
 async function add() {
   if (!selectedDate) return alert("날짜 선택");
 
-  const amount = document.getElementById("amount").value;
+  const amountInput = document.getElementById("amount");
+  const amount = amountInput.value;
+
+  if (!amount) return;
+  
   const type = document.getElementById("type").value;
   const memo = document.getElementById("memo").value;
 
   await supabaseClient.from("expenses").insert({
   date: selectedDate,
-  amount,
+  amount: Number(amount),
   type,
   memo
 });
 
+amountInput.value = "";
+
 await renderCalendar();
 loadExpenses(selectedDate);
-
 }
 
 async function loadExpenseDatesForMonth(year, month) {
