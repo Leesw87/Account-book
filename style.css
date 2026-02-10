@@ -117,20 +117,26 @@ li {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 6px;
+  padding: 12px 4px;
   border-bottom: 1px solid #eee;
 }
 
-.expense-info {
-  flex: 1;
+.expense-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.expense-info .main {
+.expense-main {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap; /* 🔥 줄바꿈 방지 */
 }
 
-.expense-info .memo {
+.expense-memo {
   font-size: 12px;
   color: #888;
 }
@@ -141,6 +147,5 @@ button.delete {
   color: #ff6b6b;
   font-size: 12px;
   cursor: pointer;
-  padding: 4px 6px;
+  white-space: nowrap;
 }
-
