@@ -56,6 +56,14 @@ h2 {
   cursor: pointer;
 }
 
+.day.has-expense::after {
+  content: "●";
+  display: block;
+  font-size: 10px;
+  color: #fa5252;
+  margin-top: 2px;
+}
+
 .day:hover {
   background: #e7f5ff;
 }
