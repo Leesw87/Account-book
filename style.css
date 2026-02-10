@@ -167,7 +167,7 @@ button.delete-btn:hover {
 }
 
 #type {
-  width: 120px;     /* 👈 작게 */
+  width: 100px;     /* 👈 작게 */
   flex-shrink: 0;
 }
 
