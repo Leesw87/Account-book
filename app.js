@@ -98,7 +98,7 @@ async function loadExpenses(date) {
   <button class="delete-btn">삭제</button>
 `;
 
-    li.querySelector(".delete").onclick = () =>
+    li.querySelector(".delete-btn").onclick = () =>
       deleteExpense(item.id, date);
 
     list.appendChild(li);
