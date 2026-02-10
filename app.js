@@ -187,6 +187,7 @@ amountInput.value = "";
 
 await renderCalendar();
 loadExpenses(selectedDate);
+  resetSelection();
 }
 
 async function loadExpenseDatesForMonth(year, month) {
