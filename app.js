@@ -1,5 +1,6 @@
 let currentDate = new Date();
-let selectedDate = new Date().toISOString().slice(0, 10);
+//let selectedDate = new Date().toISOString().slice(0, 10);
+let selectedDate = null;
 let expenseDates = new Set();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -47,8 +48,16 @@ async function renderCalendar() {
   }
 }
 
+function resetSelection() {
+  selectedDate = null;
+
+  document.getElementById("expenseSection").style.display = "none";
+  document.getElementById("selectedDate").textContent = "";
+  document.getElementById("expenseList").innerHTML = "";
+}
 
 function changeMonth(diff) {
+  resetSelection();
   currentDate.setMonth(currentDate.getMonth() + diff);
   renderCalendar();
 }
