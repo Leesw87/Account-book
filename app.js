@@ -1,6 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
   const addBtn = document.getElementById("addBtn");
   addBtn.addEventListener("click", add);
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
+
+  renderCalendar(year, month);
+
+  // 오늘 날짜 자동 선택
+  setTimeout(() => {
+    const dayElements = document.querySelectorAll(".day");
+    dayElements.forEach(d => {
+      if (d.dataset.date === dateStr) {
+        d.click();
+      }
+    });
+  }, 0);
 });
 
 
@@ -123,6 +139,7 @@ function renderCalendar(year, month) {
     div.innerText = d;
 
     div.onclick = () => selectDate(dateStr, div);
+    div.dataset.date = dateStr;
 
     calendar.appendChild(div);
   }
