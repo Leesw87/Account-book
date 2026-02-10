@@ -94,7 +94,7 @@ async function add() {
   const type = document.getElementById("type").value;
   const memo = document.getElementById("memo").value;
 
-  if (type == 0)
+  if (type == "PayType")
   {
     alert("지출종류를 선택하세요.");
     return;
