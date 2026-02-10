@@ -92,13 +92,11 @@ async function loadExpenses(date) {
       <span class="dot">·</span>
       <span class="amount">${item.amount.toLocaleString()}원</span>
     </div>
-    <div class="expense-memo">
-      ${item.memo || ""}
-    </div>
+    <div class="expense-memo">${item.memo || ""}</div>
   </div>
-  <button class="delete">삭제</button>
-`;
 
+  <button class="delete-btn">삭제</button>
+`;
 
     li.querySelector(".delete").onclick = () =>
       deleteExpense(item.id, date);
