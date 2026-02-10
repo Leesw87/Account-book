@@ -97,3 +97,11 @@ li {
   border-radius: 6px;
   font-size: 12px;
 }
+
+.day.has-expense::after {
+  content: "•";
+  display: block;
+  font-size: 12px;
+  color: #fa5252;
+}
+
