@@ -1,3 +1,7 @@
+document.addEventListener("DOMContentLoaded", () => {
+  // 기존 index.html에 있던 JS 전부 여기로 옮김
+});
+
 const dateEl = document.getElementById("date");
 const amountEl = document.getElementById("amount");
 const typeEl = document.getElementById("type");
