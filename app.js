@@ -1,5 +1,5 @@
 let currentDate = new Date();
-let selectedDate = null;
+let selectedDate = new Date().toISOString().slice(0, 10);
 let expenseDates = new Set();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -120,3 +120,4 @@ async function loadExpenseDatesForMonth(year, month) {
   expenseDates = new Set(data.map(d => d.date));
 }
 
+window.add = add;
