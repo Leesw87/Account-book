@@ -86,7 +86,7 @@ async function loadExpenses(date) {
 async function add() {
   if (!selectedDate) return alert("날짜 선택");
 
-  const amount = amount.value;
+  const amount = document.getElementById("amount").value;
   const type = document.getElementById("type").value;
   const memo = document.getElementById("memo").value;
 
