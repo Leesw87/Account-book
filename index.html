@@ -28,21 +28,25 @@
 
 <h2>📒 가계부</h2>
 
-<input type="date" id="date">
-<input type="number" id="amount" placeholder="금액">
+<div id="calendar"></div>
 
-<select id="type">
-  <option value="고정지출">고정지출</option>
-  <option value="카드지출">카드지출</option>
-  <option value="현금지출">현금지출</option>
-</select>
+<h3 id="selectedDate"></h3>
 
-<input type="text" id="memo" placeholder="메모">
-<button id="addBtn">추가</button>
+<div id="expenseSection" style="display:none;">
+  <input type="number" id="amount" placeholder="금액">
 
-<ul id="list"></ul>
+  <select id="type">
+    <option value="고정지출">고정지출</option>
+    <option value="카드지출">카드지출</option>
+    <option value="현금지출">현금지출</option>
+  </select>
 
-<div class="stats" id="stats"></div>
+  <input type="text" id="memo" placeholder="메모">
+  <button id="addBtn">추가</button>
+
+  <ul id="list"></ul>
+</div>
+
 
 </body>
 </html>
