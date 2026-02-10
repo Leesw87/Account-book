@@ -86,10 +86,16 @@ async function loadExpenses(date) {
     const li = document.createElement("li");
 
     li.innerHTML = `
-      <span>${item.type} - ${item.amount.toLocaleString()}원</span>
-      <span>${item.memo || ""}</span>
-      <button class="delete" data-id="${item.id}">삭제</button>
-    `;
+  <div class="expense-info">
+    <div class="main">
+      ${item.type} · ${item.amount.toLocaleString()}원
+    </div>
+    <div class="memo">
+      ${item.memo || ""}
+    </div>
+  </div>
+  <button class="delete">삭제</button>
+`;
 
     li.querySelector(".delete").onclick = () =>
       deleteExpense(item.id, date);
